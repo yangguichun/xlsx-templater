@@ -1,19 +1,19 @@
 中文文档请参考 [readme.zh-cn.md](readme.zh-cn.md)
-# What is XlsxTemplater
-XlsxTemplater uses JavaScript Object or JSON as data input to render an xlsx file.
+# What is xlsxtemplater
+xlsxtemplater uses JavaScript Object or JSON as data input to render an xlsx file.
 
-XlsxTemplater is based on the concepts of tags, and each type of tag exposes a feature to the user writing the template.
+xlsxtemplater is based on the concepts of tags, and each type of tag exposes a feature to the user writing the template.
 
-XlsxTemplater's tag is compatible with the [docxtemplater's xlsx module](https://docxtemplater.com/modules/xlsx/#loops), but only supports a subset of the tag grammar. The most important thing is that XlsxTemplater is free.
+xlsxtemplater's tag is compatible with the [docxtemplater's xlsx module](https://docxtemplater.com/modules/xlsx/#loops), but only supports a subset of the tag grammar. The most important thing is that xlsxtemplater is free.
 
-XlsxTemplater is built on top of [ExcelJS](https://github.com/exceljs/exceljs), a robust library for reading, manipulating and writing Excel files.
+xlsxtemplater is built on top of [ExcelJS](https://github.com/exceljs/exceljs), a robust library for reading, manipulating and writing Excel files.
 
 # Installation
 
 ```bash
-npm install xlsx-templater
+npm install @sailimuhu/xlsxtemplater
 # or
-yarn add xlsx-templater
+yarn add @sailimuhu/xlsxtemplater
 ```
 
 ## Dependencies
@@ -23,7 +23,7 @@ yarn add xlsx-templater
 
 ### Node.js (CommonJS)
 ```javascript
-const XlsxTemplater = require('xlsx-templater');
+const XlsxTemplater = require('@sailimuhu/xlsxtemplater');
 
 // Create a new instance with your template file
 const templater = new XlsxTemplater('./template.xlsx');
@@ -31,7 +31,7 @@ const templater = new XlsxTemplater('./template.xlsx');
 
 ### Node.js (ESM)
 ```javascript
-import XlsxTemplater from 'xlsx-templater';
+import XlsxTemplater from '@sailimuhu/xlsxtemplater';
 
 // Create a new instance with your template file
 const templater = new XlsxTemplater('./template.xlsx');
@@ -40,14 +40,14 @@ const templater = new XlsxTemplater('./template.xlsx');
 ### Browser
 ```html
 <!-- UMD version -->
-<script src="node_modules/xlsx-templater/dist/xlsx-templater.umd.js"></script>
+<script src="node_modules/@sailimuhu/xlsxtemplater/dist/xlsxtemplater.umd.js"></script>
 <script>
   const templater = new XlsxTemplater(file); // file can be Blob/ArrayBuffer
 </script>
 
 <!-- ES Module -->
 <script type="module">
-  import XlsxTemplater from 'xlsx-templater';
+  import XlsxTemplater from '@sailimuhu/xlsxtemplater';
   const templater = new XlsxTemplater(file);
 </script>
 ```
@@ -75,7 +75,7 @@ link.click();
 
 # Quick Start
 ```javascript
-const XlsxTemplater = require('xlsx-templater');
+const XlsxTemplater = require('@sailimuhu/xlsxtemplater');
 
 // Create a new instance with your template file
 const templater = new XlsxTemplater('./template.xlsx');

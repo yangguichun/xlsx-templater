@@ -6,7 +6,7 @@ export default [
   {
     input: 'src/XlsxTemplater.js',
     output: {
-      file: 'dist/xlsx-templater.esm.js',
+      file: 'dist/xlsxtemplater.esm.js',
       format: 'es'
     },
     plugins: [resolve(), commonjs()]
@@ -15,7 +15,7 @@ export default [
   {
     input: 'src/XlsxTemplater.js',
     output: {
-      file: 'dist/xlsx-templater.cjs.js',
+      file: 'dist/xlsxtemplater.cjs.js',
       format: 'cjs'
     },
     plugins: [resolve(), commonjs()]
@@ -24,7 +24,7 @@ export default [
   {
     input: 'src/XlsxTemplater.js',
     output: {
-      file: 'dist/xlsx-templater.umd.js',
+      file: 'dist/xlsxtemplater.umd.js',
       format: 'umd',
       name: 'XlsxTemplater'
     },

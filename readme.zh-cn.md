@@ -1,18 +1,18 @@
-# XlsxTemplater 是什么
-XlsxTemplater 使用 JavaScript 对象或 JSON 作为数据输入来渲染 xlsx 文件。
+# xlsxtemplater 是什么
+xlsxtemplater 使用 JavaScript 对象或 JSON 作为数据输入来渲染 xlsx 文件。
 
-XlsxTemplater 基于标记的概念，每种类型的标记都为模板编写者提供特定的功能。
+xlsxtemplater 基于标记的概念，每种类型的标记都为模板编写者提供特定的功能。
 
-XlsxTemplater 的标记语法与 [docxtemplater 的 xlsx 模块](https://docxtemplater.com/modules/xlsx/#loops) 兼容，但只支持标记语法的一个子集。最重要的是，XlsxTemplater 是免费的。
+xlsxtemplater 的标记语法与 [docxtemplater 的 xlsx 模块](https://docxtemplater.com/modules/xlsx/#loops) 兼容，但只支持标记语法的一个子集。最重要的是，xlsxtemplater 是免费的。
 
-XlsxTemplater 基于 [ExcelJS](https://github.com/exceljs/exceljs) 构建，这是一个功能强大的 Excel 文件读取、操作和写入库。
+xlsxtemplater 基于 [ExcelJS](https://github.com/exceljs/exceljs) 构建，这是一个功能强大的 Excel 文件读取、操作和写入库。
 
 # 安装
 
 ```bash
-npm install xlsx-templater
+npm install @sailimuhu/xlsxtemplater
 # 或者
-yarn add xlsx-templater
+yarn add @sailimuhu/xlsxtemplater
 ```
 
 ## 依赖
@@ -22,7 +22,7 @@ yarn add xlsx-templater
 
 ### Node.js (CommonJS)
 ```javascript
-const XlsxTemplater = require('xlsx-templater');
+const XlsxTemplater = require('@sailimuhu/xlsxtemplater');
 
 // 创建模板实例
 const templater = new XlsxTemplater('./template.xlsx');
@@ -30,7 +30,7 @@ const templater = new XlsxTemplater('./template.xlsx');
 
 ### Node.js (ESM)
 ```javascript
-import XlsxTemplater from 'xlsx-templater';
+import XlsxTemplater from '@sailimuhu/xlsxtemplater';
 
 // 创建模板实例
 const templater = new XlsxTemplater('./template.xlsx');
@@ -39,14 +39,14 @@ const templater = new XlsxTemplater('./template.xlsx');
 ### 浏览器
 ```html
 <!-- UMD 版本 -->
-<script src="node_modules/xlsx-templater/dist/xlsx-templater.umd.js"></script>
+<script src="node_modules/@sailimuhu/xlsxtemplater/dist/xlsxtemplater.umd.js"></script>
 <script>
   const templater = new XlsxTemplater(file); // file 可以是 Blob 或 ArrayBuffer
 </script>
 
 <!-- ES Module -->
 <script type="module">
-  import XlsxTemplater from 'xlsx-templater';
+  import XlsxTemplater from '@sailimuhu/xlsxtemplater';
   const templater = new XlsxTemplater(file);
 </script>
 ```
@@ -74,7 +74,7 @@ link.click();
 
 # 快速开始
 ```javascript
-const XlsxTemplater = require('xlsx-templater');
+const XlsxTemplater = require('@sailimuhu/xlsxtemplater');
 
 // 创建模板实例
 const templater = new XlsxTemplater('./template.xlsx');
@@ -110,10 +110,10 @@ await templater.save('./output.xlsx');
 简单来说，支持5种类型的标记：`普通标记`、`对象标记`、`循环标记`、`内部循环标记`和`图片标记`。
 - `普通标记`和`内部循环标记`最灵活，可以嵌套在`对象标记`和`循环标记`内部。
 - `循环标记`可以包含嵌套的`对象标记`、`内部循环标记`、`图片标记`，但不能嵌套另一个`循环标记`。
-- `对象标记`可以包含嵌套的`对象标记`、`图片标记`、`内部���环标记`，但不能嵌套`循环标记`，并且可以跨多行。
+- `对象标记`可以包含嵌套的`对象标记`、`图片标记`、`内部循环标记`，但不能嵌套`循环标记`，并且可以跨多行。
 
 ## 示例
-以下是基本用法。
+以下是��本用法。
 这个例子展示了所有支持的数据格式：
 ```js
 let XlsxTemplater = require('XlsxTemplater')
@@ -169,7 +169,7 @@ templater.render({
   productList:['产品A', '产品B']
 })
 ```
-渲染后，注意 productList 是一个数组，会被转换为逗号分隔的字符串：
+渲染后，注意 productList 是一个数组，会被转换��逗号分隔的字符串：
 
 |  华杰  | 2022-12-09 05:25:00 |'产品A', '产品B'
 |:-|:-|:-
@@ -276,7 +276,7 @@ templater.render({
 
 注意事项：
 >1. 循环支持单行和多行两种模式
->2. 循环内部不能嵌套普通循环标记
+>2. 循环内部不能嵌套普���循环标记
 >3. 循环内部可以引用外层对象的属性
 >4. 循环内部支持嵌套[对象标记](#4-对象标记-xxxxxx)
 >5. 循环内部支持嵌套[内部循环标记](#3-内部循环标记)
@@ -354,4 +354,4 @@ templater.render({
 - 复制行时，会复制相应的条件格式并调整行号
 - 删除行时，会删除相应的条件格式并调整行号
 
->注意：假设条件格式的引用和表达��仅使用同一行内的单元格，不存在跨行引用。 
+>注意：假设条件格式的引用和表达式仅使用同一行内的单元格，不存在跨行引用。 
