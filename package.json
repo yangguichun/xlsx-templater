@@ -1,0 +1,66 @@
+{
+  "name": "xlsx-templater",
+  "version": "1.0.0",
+  "description": "A powerful Excel template engine that supports various tags for data rendering in both Node.js and browser environments",
+  "type": "module",
+  "main": "./dist/xlsx-templater.cjs.js",
+  "module": "./dist/xlsx-templater.esm.js",
+  "browser": "./dist/xlsx-templater.umd.js",
+  "exports": {
+    ".": {
+      "require": "./dist/xlsx-templater.cjs.js",
+      "import": "./dist/xlsx-templater.esm.js",
+      "browser": "./dist/xlsx-templater.umd.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "README.zh-cn.md",
+    "LICENSE"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangguichun/xlsx-templater.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yangguichun/xlsx-templater/issues"
+  },
+  "homepage": "https://github.com/yangguichun/xlsx-templater#readme",
+  "keywords": [
+    "xlsx",
+    "excel",
+    "tag",
+    "templater",
+    "template",
+    "excel-template",
+    "xlsx-template",
+    "exceljs"
+  ],
+  "author": "yangguichun@foxmail.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "exceljs": "^4.3.0",
+    "xlsx-templater": "file:"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.79.1"
+  },
+  "peerDependencies": {
+    "exceljs": "^4.3.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
