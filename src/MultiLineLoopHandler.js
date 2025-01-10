@@ -1,6 +1,6 @@
-const TagUtil = require("./TagUtil");
-const AtTagHandler = require("./AtTagHandler");
-const ExcelCopier = require("./ExcelCopier");
+import { TagUtil } from './TagUtil.js';
+import { default as AtTagHandler } from './AtTagHandler.js';
+import { default as ExcelCopier } from './ExcelCopier.js';
 
 class MultiLineLoopHandler {
   constructor(worksheet, data) {
@@ -196,6 +196,11 @@ class MultiLineLoopHandler {
       return false;
     }
 
+    // 如果是单行循环，则不处理
+    if(this.endRowIndex == this.startRowIndex){
+      return false;
+    }
+
     await this._handleLoopData();
 
     if (this.loopDataArray.length > 0) {
@@ -207,4 +212,4 @@ class MultiLineLoopHandler {
   }
 }
 
-module.exports = MultiLineLoopHandler;
+export { MultiLineLoopHandler as default };

@@ -1,17 +1,16 @@
-let ImageUtil = require('./ImageUtil')
-let ExcelUtil = require('./ExcelUtil')
+import { default as ImageUtil } from './ImageUtil.js';
+import { default as ExcelUtil } from './ExcelUtil.js';
 /**
  * 封装了用于匹配各种tag的正则
  */
- class TagUtil {
-  
+class TagUtil {
   /**
    * 将这个数组内的所有标记都替换了
    * 这个数组可能来自于行循环 {#}，也可能来自于At标记 {@}
    * @param {*} cellList 
    * @param {*} data 
    */
-   static async replaceCellList(cellList, data){
+  static async replaceCellList(cellList, data){
     for(let cell of cellList){
       // 如果这个不先替换，则innerloop内部的normalTag会被replaceCellNormalTag替换掉
       // 所以可以认为innerloop的优先级更高
@@ -33,14 +32,14 @@ let ExcelUtil = require('./ExcelUtil')
   }
 
   /**
-   * 替换该单元格内的图片标记
+   * 替换该��元格内的图片标记
    * 对于图片url，会从网络上读取相关的图片
    * @param {*} cell 
    * @param {*} data 
    * @param {*} imageCount, 这个单元格中总共有几个图片，主要针对innerloop的情况
    * @param {*} imageIndexInCell, 该图片是单元格中的第几个
    */
-   static async replaceImageCellTag(cell, data, imageCount=1, imageIndexInCell=0){
+  static async replaceImageCellTag(cell, data, imageCount=1, imageIndexInCell=0){
     let res= TagUtil.getImageTag(cell.value)
     if (res.tag) {      
       let workbook = cell.worksheet.workbook
@@ -81,7 +80,7 @@ let ExcelUtil = require('./ExcelUtil')
    * @param {*} cell，要替换的单元格 
    * @param {*} data，数据寻找的范围，有这个之后，就可以在循环内的单元格中使用，只要传入循环的数据即可
    */
-   static replaceCellNormalTag(cell, data) {
+  static replaceCellNormalTag(cell, data) {
     let res = TagUtil.getNormalTag(cell.value)
     if (res.tag) {      
       res.tag.forEach((tag, index)=>{
@@ -103,7 +102,7 @@ let ExcelUtil = require('./ExcelUtil')
    * 判断当前cell中是否包含innerloop，如果包含，就用data中的数据来替换
    * @param {*} cell 
    * @param {*} data 
-   * data中与loop tag对应的数据可以是数组，也可以是对象，像下面这样
+   * data中与loop tag对应的数据可以是数组，也可以是对象，像��面这样
    * defects:[{}, {}]
    * defects: {}
    */
@@ -327,4 +326,4 @@ let ExcelUtil = require('./ExcelUtil')
   }
 }
 
-module.exports = TagUtil
+export { TagUtil };

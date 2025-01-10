@@ -1,9 +1,9 @@
 import ExcelJS from 'exceljs'
-import { TagUtil } from './TagUtil'
-import ExcelUtil from './ExcelUtil'
-import AtTagHandler from './AtTagHandler'
-import LoopRowHandler from './LoopRowHandler'
-import MultiLineLoopHandler from './MultiLineLoopHandler'
+import { TagUtil } from './TagUtil.js'
+import { default as ExcelUtil } from './ExcelUtil.js'
+import { default as AtTagHandler } from './AtTagHandler.js'
+import { default as LoopRowHandler } from './LoopRowHandler.js'
+import { default as MultiLineLoopHandler } from './MultiLineLoopHandler.js'
 
 /**
  * 
@@ -145,4 +145,4 @@ class XlsxTemplater {
   }
 }
 
-export default XlsxTemplater
+export { XlsxTemplater as default };

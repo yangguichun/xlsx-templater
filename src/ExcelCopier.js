@@ -260,6 +260,25 @@ class ExcelCopier {
       this.worksheet.addConditionalFormatting(cf);
     });
   }
+
+  /**
+   * 复制单元格的样式
+   * @param {*} sourceCell 
+   * @param {*} targetCell 
+   */
+  _copyCellStyle(sourceCell, targetCell) {
+    // ... implementation ...
+  }
+
+  /**
+   * 复制条件格式
+   * @param {*} startRow 
+   * @param {*} endRow 
+   * @param {*} targetRow 
+   */
+  _copyConditionalFormatting(startRow, endRow, targetRow) {
+    // ... implementation ...
+  }
 }
 
-module.exports = ExcelCopier; 
+export { ExcelCopier as default }; 

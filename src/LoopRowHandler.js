@@ -1,6 +1,6 @@
-let TagUtil = require('./TagUtil')
-let AtTagHandler = require('./AtTagHandler')
-let ExcelUtil = require('./ExcelUtil')
+import { TagUtil } from './TagUtil.js';
+import { default as AtTagHandler } from './AtTagHandler.js';
+import { default as ExcelUtil } from './ExcelUtil.js';
 /**
  * 用于处理所有循环 {#xxxx}
  * 允许在内部的单元格嵌套 @标记， 
@@ -72,7 +72,7 @@ class LoopRowHandler{
     // 首先把这一行过一遍，看看是不是loop row
     // 如果不是，则返回1，到下一行
     // 如果是，则根据tag找到循环的数据
-    // 然后遍历该数据，对于每个数据项复制一行，然后用这个数据项对这一行数据做处理    
+    // 然后遍历该数据，对于每个数据项复制一行，然后这个数据项对这一行数据做处理    
     // if(row.number == 34){
     //   console.log(row)
     // }
@@ -134,4 +134,4 @@ class LoopRowReplacer{
     }
   }
 }
-module.exports = LoopRowHandler
+export { LoopRowHandler as default };

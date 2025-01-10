@@ -1,5 +1,5 @@
-let TagUtil = require('./TagUtil')
-let ExcelUtil = require('./ExcelUtil')
+import { TagUtil } from './TagUtil.js';
+import { default as ExcelUtil } from './ExcelUtil.js';
 /**
  * 用于处理所有@标记{@xxx}...{/xxx}
  * @标记 主要用于方便定位一个对象内部的属性。
@@ -72,4 +72,4 @@ class AtTagHandler{
   }
 }
 
-module.exports = AtTagHandler
+export { AtTagHandler as default };

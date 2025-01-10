@@ -27,7 +27,7 @@ export default [
   {
     input: 'src/XlsxTemplater.js',
     output: {
-      file: 'dist/xlsxtemplater.cjs.js',
+      file: 'dist/xlsxtemplater.cjs',
       format: 'cjs',
       exports: 'auto'
     },
@@ -35,11 +35,13 @@ export default [
     plugins: [
       resolve({ 
         preferBuiltins: true,
-        browser: false
+        browser: false,
+        extensions: ['.js', '.mjs', '.json']
       }), 
       commonjs({
         ignoreDynamicRequires: true,
-        transformMixedEsModules: true
+        transformMixedEsModules: true,
+        include: /node_modules/
       }),
       json()
     ]
@@ -48,18 +50,20 @@ export default [
   {
     input: 'src/XlsxTemplater.js',
     output: {
-      file: 'dist/xlsxtemplater.esm.js',
+      file: 'dist/xlsxtemplater.mjs',
       format: 'es'
     },
     external,
     plugins: [
       resolve({ 
         preferBuiltins: true,
-        browser: false
+        browser: false,
+        extensions: ['.js', '.mjs', '.json']
       }), 
       commonjs({
         ignoreDynamicRequires: true,
-        transformMixedEsModules: true
+        transformMixedEsModules: true,
+        include: /node_modules/
       }),
       json()
     ]
@@ -82,11 +86,13 @@ export default [
     plugins: [
       resolve({ 
         preferBuiltins: true,
-        browser: true
+        browser: true,
+        extensions: ['.js', '.mjs', '.json']
       }), 
       commonjs({
         ignoreDynamicRequires: true,
-        transformMixedEsModules: true
+        transformMixedEsModules: true,
+        include: /node_modules/
       }),
       json()
     ]

@@ -1,4 +1,4 @@
-let fetch = require('node-fetch')
+import fetch from 'node-fetch';
 
 /**
  * 图像的辅助工具
@@ -47,4 +47,4 @@ class ImageUtil{
   }
 }
 
-module.exports = ImageUtil
+export { ImageUtil as default };

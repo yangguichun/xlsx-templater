@@ -1,4 +1,4 @@
-let cloneDeep = require('lodash/cloneDeep')
+import cloneDeep from 'lodash/cloneDeep';
 
 class ExcelUtil {
   /**
@@ -87,7 +87,7 @@ class ExcelUtil {
   
   /**
    * 根据增加或者删除行，调整条件格式的样式
-   * 这里假设条件格式都是针对同一行的单元格的，不会跨行，包括ref和 rules->formulae的内容都不会跨行
+   * 这里假设条件格式是针对同一行的单元格的，不会跨行，包括ref和 rules->formulae的内容都不会跨行
    * @param {*} rowIndex，要调整的行号，从1开始，如果action是add，则这个rowIndex是要复制的源行号，如果action是del，则是要删除的行号
    * @param {*} count, 如果是del，则count是负数，如果是add，则count是正数，表示要添加的行数
    * @param {*} action ，动作，可以还add, del
@@ -201,4 +201,4 @@ class ExcelUtil {
   }
 }
 
-module.exports = ExcelUtil
+export { ExcelUtil as default };

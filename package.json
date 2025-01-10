@@ -1,15 +1,14 @@
 {
   "name": "@sailimuhu/xlsxtemplater",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A powerful Excel template engine that supports various tags for data rendering in both Node.js and browser environments",
-  "type": "module",
-  "main": "./dist/xlsxtemplater.cjs.js",
-  "module": "./dist/xlsxtemplater.esm.js",
+  "main": "./dist/xlsxtemplater.cjs",
+  "module": "./dist/xlsxtemplater.mjs",
   "browser": "./dist/xlsxtemplater.umd.js",
   "exports": {
     ".": {
-      "require": "./dist/xlsxtemplater.cjs.js",
-      "import": "./dist/xlsxtemplater.esm.js",
+      "require": "./dist/xlsxtemplater.cjs",
+      "import": "./dist/xlsxtemplater.mjs",
       "browser": "./dist/xlsxtemplater.umd.js"
     }
   },
@@ -24,8 +23,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/test.js",
-    "build": "rollup -c",
+    "test": "npm run build && node ./test/test.cjs",
+    "build": "rollup -c rollup.config.mjs",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -51,11 +50,12 @@
   "dependencies": {
     "@sailimuhu/xlsxtemplater": "file:",
     "exceljs": "^4.3.0",
-    "xlsx-templater": "file:",
-    "xlsxtemplater": "file:"
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "rollup": "^2.79.1"
   },
