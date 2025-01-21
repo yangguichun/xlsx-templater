@@ -1,6 +1,6 @@
 {
   "name": "@sailimuhu/xlsxtemplater",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "A powerful Excel template engine that supports various tags for data rendering in both Node.js and browser environments",
   "main": "./dist/xlsxtemplater.cjs",
   "module": "./dist/xlsxtemplater.mjs",

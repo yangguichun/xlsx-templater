@@ -17,7 +17,7 @@ class XlsxTemplater {
    * 使用data渲染 filePath路径下的文件，并返回渲染后的workbook   
    * @param {*} filePath 
    * @param {*} data 
-   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染第一个worksheet
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染所有worksheet
    * @returns 渲染后的workbook
    */
   static async renderFromFile(filePath, data, worksheetNameList=[]){
@@ -31,7 +31,7 @@ class XlsxTemplater {
    * 解析从buffer中读取的Excel文件，用data渲染，然后再返回为buffer
    * @param {*} buffer 
    * @param {*} data 
-   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染第一个worksheet
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染所有worksheet
    * @returns 返回一个Buffer
    */
     static async renderFromBuffer(buffer, data, worksheetNameList=[]){
@@ -44,12 +44,12 @@ class XlsxTemplater {
    * 
    * @param {*} workbook，要渲染的workbook
    * @param {*} data，用于渲染的json格式数据
-   * @param {*} worksheetNameList ，要渲染的worksheet名称列表
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染所有worksheet
    */
   static async _findWorksheetAndRender(workbook, data, worksheetNameList){
     let renderWorksheetList = []
-    if(worksheetNameList == null || worksheetNameList === undefined || worksheetNameList.length == 0){
-      renderWorksheetList = [workbook.worksheets[0]]
+    if(worksheetNameList == null || worksheetNameList === undefined || worksheetNameList.length == 0){      
+      renderWorksheetList = workbook.worksheets
     }else{
       workbook.worksheets.forEach(item=>{
         if(worksheetNameList.indexOf(item.name)>=0){
