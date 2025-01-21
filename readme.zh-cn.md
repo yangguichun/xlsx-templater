@@ -355,3 +355,71 @@ templater.render({
 - 删除行时，会删除相应的条件格式并调整行号
 
 >注意：假设条件格式的引用和表达式仅使用同一行内的单元格，不存在跨行引用。 
+
+# 解决Exceljs库的一个bug：Worksheet.spiceRows()函数在删除行时会将后续所有行的合并单元格取消合并
+如果你使用的是4.4.0及其更早版本的exceljs，请在node_modules/exceljs/lib/doc/worksheet.js， 然后找到 spiceRows()
+在下面这个分支，原来是下面这样的
+```js
+if (nExpand < 0) {
+      // remove rows
+      if (start === nEnd) {
+        this._rows[nEnd - 1] = undefined;
+      }
+      for (i = nKeep; i <= nEnd; i++) {
+        rSrc = this._rows[i - 1];
+        if (rSrc) {
+          const rDst = this.getRow(i + nExpand);
+          rDst.values = rSrc.values;
+          rDst.style = rSrc.style;
+          rDst.height = rSrc.height;
+          // eslint-disable-next-line no-loop-func
+          rSrc.eachCell({includeEmpty: true}, (cell, colNumber) => {
+            rDst.getCell(colNumber).style = cell.style;
+            // remerge cells accounting for insert offset
+            if (cell._value.constructor.name === 'MergeValue') {
+              const cellToBeMerged = this.getRow(cell._row._number + nExpand).getCell(colNumber);
+              const prevMaster = cell._value._master;
+              const newMaster = this.getRow(prevMaster._row._number + nExpand).getCell(prevMaster._column._number);
+              cellToBeMerged.merge(newMaster);
+            }
+          });
+          this._rows[i - 1] = undefined;
+        } else {
+          this._rows[i + nExpand - 1] = undefined;
+        }
+      }
+    }
+```
+改为下面这样，主要是增加了对于合并单元格的处理逻辑
+```js
+if (nExpand < 0) {
+      // remove rows
+      if (start === nEnd) {
+        this._rows[nEnd - 1] = undefined;
+      }
+      for (i = nKeep; i <= nEnd; i++) {
+        rSrc = this._rows[i - 1];
+        if (rSrc) {
+          const rDst = this.getRow(i + nExpand);
+          rDst.values = rSrc.values;
+          rDst.style = rSrc.style;
+          rDst.height = rSrc.height;
+          // eslint-disable-next-line no-loop-func
+          rSrc.eachCell({includeEmpty: true}, (cell, colNumber) => {
+            rDst.getCell(colNumber).style = cell.style;
+            // new added, fix the unmerged cell bug
+            // remerge cells accounting for insert offset
+            if (cell._value.constructor.name === 'MergeValue') {
+              const cellToBeMerged = this.getRow(cell._row._number + nExpand).getCell(colNumber);
+              const prevMaster = cell._value._master;
+              const newMaster = this.getRow(prevMaster._row._number + nExpand).getCell(prevMaster._column._number);
+              cellToBeMerged.merge(newMaster);
+            }
+          });
+          this._rows[i - 1] = undefined;
+        } else {
+          this._rows[i + nExpand - 1] = undefined;
+        }
+      }
+    }
+```

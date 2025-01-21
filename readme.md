@@ -353,3 +353,73 @@ When using loop tags that add or delete rows, conditional formatting in the work
 - When deleting rows, corresponding conditional formatting is removed and row numbers are adjusted
 
 >Note: Assumes conditional formatting references and expressions only use cells within the same row, no cross-row references.
+
+# Resolve an error of the Exceljs library: The Worksheet.spiceRows() function will unmerge all subsequent merged cells when deleting rows.
+If you are using exceljs version 4.4.0 or earlier, please go to node_modules/exceljs/lib/doc/worksheet.js and then find the spiceRows() function.
+In the following branch, it was originally like this.
+
+
+```js
+if (nExpand < 0) {
+      // remove rows
+      if (start === nEnd) {
+        this._rows[nEnd - 1] = undefined;
+      }
+      for (i = nKeep; i <= nEnd; i++) {
+        rSrc = this._rows[i - 1];
+        if (rSrc) {
+          const rDst = this.getRow(i + nExpand);
+          rDst.values = rSrc.values;
+          rDst.style = rSrc.style;
+          rDst.height = rSrc.height;
+          // eslint-disable-next-line no-loop-func
+          rSrc.eachCell({includeEmpty: true}, (cell, colNumber) => {
+            rDst.getCell(colNumber).style = cell.style;
+            // remerge cells accounting for insert offset
+            if (cell._value.constructor.name === 'MergeValue') {
+              const cellToBeMerged = this.getRow(cell._row._number + nExpand).getCell(colNumber);
+              const prevMaster = cell._value._master;
+              const newMaster = this.getRow(prevMaster._row._number + nExpand).getCell(prevMaster._column._number);
+              cellToBeMerged.merge(newMaster);
+            }
+          });
+          this._rows[i - 1] = undefined;
+        } else {
+          this._rows[i + nExpand - 1] = undefined;
+        }
+      }
+    }
+```
+Change it to the following, mainly adding the processing logic for merged cells.
+```js
+if (nExpand < 0) {
+      // remove rows
+      if (start === nEnd) {
+        this._rows[nEnd - 1] = undefined;
+      }
+      for (i = nKeep; i <= nEnd; i++) {
+        rSrc = this._rows[i - 1];
+        if (rSrc) {
+          const rDst = this.getRow(i + nExpand);
+          rDst.values = rSrc.values;
+          rDst.style = rSrc.style;
+          rDst.height = rSrc.height;
+          // eslint-disable-next-line no-loop-func
+          rSrc.eachCell({includeEmpty: true}, (cell, colNumber) => {
+            rDst.getCell(colNumber).style = cell.style;
+            // new added, fix the unmerged cell bug
+            // remerge cells accounting for insert offset
+            if (cell._value.constructor.name === 'MergeValue') {
+              const cellToBeMerged = this.getRow(cell._row._number + nExpand).getCell(colNumber);
+              const prevMaster = cell._value._master;
+              const newMaster = this.getRow(prevMaster._row._number + nExpand).getCell(prevMaster._column._number);
+              cellToBeMerged.merge(newMaster);
+            }
+          });
+          this._rows[i - 1] = undefined;
+        } else {
+          this._rows[i + nExpand - 1] = undefined;
+        }
+      }
+    }
+```

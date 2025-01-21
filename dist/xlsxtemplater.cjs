@@ -1291,41 +1291,55 @@ class XlsxTemplater {
     this._worksheet = worksheet;
     this._data = data;
   }
-
   /**
-   * 使用data渲染 filePath路径下的文件，并返回渲染后的workbook
+   * 使用data渲染 filePath路径下的文件，并返回渲染后的workbook   
    * @param {*} filePath 
    * @param {*} data 
-   * @param {*} worksheetIndex，要渲染的数据所在的worksheet
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染第一个worksheet
    * @returns 渲染后的workbook
    */
-  static async renderFromFile(filePath, data, worksheetIndex=0){
+  static async renderFromFile(filePath, data, worksheetNameList=[]){
     let workbook = new ExcelJS__default["default"].Workbook();
     // workbook.getWorksheet().addConditionalFormatting
     await workbook.xlsx.readFile(filePath);
-    let worksheet = workbook.worksheets[worksheetIndex];
-    let templater = new XlsxTemplater(worksheet, data);
-    await templater.render();
+    await XlsxTemplater._findWorksheetAndRender(workbook, data, worksheetNameList);
     return workbook
   }
-
   /**
    * 解析从buffer中读取的Excel文件，用data渲染，然后再返回为buffer
    * @param {*} buffer 
    * @param {*} data 
-   * @param {*} worksheetIndex 
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表，如果不指定，默认就渲染第一个worksheet
    * @returns 返回一个Buffer
    */
-  static async renderFromBuffer(buffer, data, worksheetIndex=0){
-    let workbook = new ExcelJS__default["default"].Workbook();
-    await workbook.xlsx.load(buffer);
-    let worksheet = workbook.worksheets[worksheetIndex];
-    let templater = new XlsxTemplater(worksheet, data);
-    await templater.render();
-    return await workbook.xlsx.writeBuffer()
+    static async renderFromBuffer(buffer, data, worksheetNameList=[]){
+      let workbook = new ExcelJS__default["default"].Workbook();
+      await workbook.xlsx.load(buffer);
+      await XlsxTemplater._findWorksheetAndRender(workbook, data, worksheetNameList);    
+      return await workbook.xlsx.writeBuffer()
+    }
+  /**
+   * 
+   * @param {*} workbook，要渲染的workbook
+   * @param {*} data，用于渲染的json格式数据
+   * @param {*} worksheetNameList ，要渲染的worksheet名称列表
+   */
+  static async _findWorksheetAndRender(workbook, data, worksheetNameList){
+    let renderWorksheetList = [];
+    if(worksheetNameList == null || worksheetNameList === undefined || worksheetNameList.length == 0){
+      renderWorksheetList = [workbook.worksheets[0]];
+    }else {
+      workbook.worksheets.forEach(item=>{
+        if(worksheetNameList.indexOf(item.name)>=0){
+          renderWorksheetList.push(item);
+        }
+      });
+    }
+    for(let i = 0; i<renderWorksheetList.length; i++){
+      let templater = new XlsxTemplater(renderWorksheetList[i], data);
+      await templater.render();
+    }   
   }
-
-
   /**
    * 便利数据表内的所有单元格
    */
